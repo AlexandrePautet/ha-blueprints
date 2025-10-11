@@ -22,11 +22,11 @@ blueprint:
 
 triggers:
   - trigger: state
-    entity_id: !input switch_entity
+    device_id: !input switch_entity
     from: "off"
     to: "on"
   - trigger: state
-    entity_id: !input switch_entity
+    device_id: !input switch_entity
     from: "on"
     to: "off"
 
