@@ -1,0 +1,30 @@
+blueprint:
+  name: Toogle Light Wall Switch 2
+  description: Toogle a light when different MQTT action are triggered.
+  domain: automation
+  source_url: https://github.com/AlexandrePautet/ha-blueprints
+  author: Alexandre Pautet
+  input:
+    topic_action_entity:
+      name: MQTT device Action
+      description: 'This need to be a mqtt action'
+      selector:
+        text:
+          multiline: false
+    light_target_entity:
+      name: Light
+      description: 'The light to be toggled'
+      selector:
+        target:
+          entity:
+            domain: light
+
+triggers:
+  platform: mqtt
+  topic: !input topic_action_entity
+  payload: "single"
+
+actions:
+  - alias: "Toogle the light"
+    action: light.toggle
+    target: !input light_target_entity
