@@ -1,6 +1,6 @@
 blueprint:
   name: Toogle Light Wall Switch
-  description: 'Turn on or off a light when a switch is toogled'
+  description: 'Turn on/off a light/switch when a switch is toogled'
   domain: automation
   source_url: https://github.com/AlexandrePautet/ha-blueprints/blob/main/toogle_light_wall_switch.yaml
   author: Alexandre Pautet
@@ -33,4 +33,7 @@ triggers:
 actions:
   - alias: Toogle the light
     action: light.toggle
+    target: !input light_target_entity
+  - alias: Toogle the switch
+    action: switch.toggle
     target: !input light_target_entity
