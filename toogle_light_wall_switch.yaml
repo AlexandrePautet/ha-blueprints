@@ -1,6 +1,6 @@
 blueprint:
   name: Toogle Light Wall Switch
-  description: Toogle a light when different MQTT action are triggered.
+  description: Toogle a light when differents MQTT actions (single/double/triple/many) are triggered.
   domain: automation
   source_url: https://github.com/AlexandrePautet/ha-blueprints/blob/main/toogle_light_wall_switch.yaml
   author: Alexandre Pautet
@@ -36,4 +36,5 @@ triggers:
 actions:
   - alias: "Toogle the light"
     action: light.toggle
-    target: !input light_target_entity
+    # target: !input light_target_entity
+    target: "zigbee2mqtt/{{ topic_action_entity }}/action"
