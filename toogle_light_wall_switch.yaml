@@ -1,6 +1,6 @@
 blueprint:
   name: Toogle Light Wall Switch
-  description: Toogle a light when differents MQTT actions (single/double/triple/many) are triggered.
+  description: Toogle a light when differents MQTT actions (single/double/triple/many) are triggered. v2
   domain: automation
   source_url: https://github.com/AlexandrePautet/ha-blueprints/blob/main/toogle_light_wall_switch.yaml
   author: Alexandre Pautet
