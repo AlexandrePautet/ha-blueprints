@@ -1,6 +1,6 @@
 blueprint:
   name: Toogle Light Wall Switch
-  description: 'Turn on/off a light when a switch is toogled'
+  description: 'Turn on or off a light when a switch is toogled'
   domain: automation
   source_url: https://github.com/AlexandrePautet/ha-blueprints/blob/main/toogle_light_wall_switch.yaml
   author: Alexandre Pautet
@@ -11,7 +11,7 @@ blueprint:
       selector:
         entity:
           filter:
-          domain: binary_sensor
+            domain: binary_sensor
     light_target_entity:
       name: Light
       description: The light to be toggled
