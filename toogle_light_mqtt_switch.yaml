@@ -1,0 +1,39 @@
+blueprint:
+  name: Toogle Light MQTT Switch
+  description: Toogle a light when differents MQTT actions (single/double/triple/many) are triggered.
+  domain: automation
+  source_url: https://github.com/AlexandrePautet/ha-blueprints/blob/main/toogle_light_mqtt_switch.yaml
+  author: Alexandre Pautet
+  input:
+    topic_action_entity:
+      name: MQTT device Action
+      description: 'This need to be a mqtt action'
+      selector:
+        text:
+          multiline: false
+    light_target_entity:
+      name: Light
+      description: 'The light to be toggled'
+      selector:
+        target:
+          entity:
+            domain: light
+
+triggers:
+  - trigger: mqtt
+    topic: !input topic_action_entity
+    payload: "single"
+  - trigger: mqtt
+    topic: !input topic_action_entity
+    payload: "double"
+  - trigger: mqtt
+    topic: !input topic_action_entity
+    payload: "triple"
+  - trigger: mqtt
+    topic: !input topic_action_entity
+    payload: "many"
+
+actions:
+  - alias: "Toogle the light"
+    action: light.toggle
+    target: !input light_target_entity
