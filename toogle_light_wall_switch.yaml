@@ -19,6 +19,9 @@ blueprint:
           entity:
             domain: light
 
+trigger_variables:
+  topic_action_entity: !input topic_action_entity
+
 triggers:
   - trigger: mqtt
     topic: !input topic_action_entity
