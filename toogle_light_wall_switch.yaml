@@ -19,10 +19,14 @@ blueprint:
           entity:
             domain: light
 
+# triggers:
+  # platform: mqtt
+  # topic: !input topic_action_entity
+  # payload: "single"
 triggers:
-  platform: mqtt
-  topic: !input topic_action_entity
-  payload: "single"
+  - trigger: mqtt
+    topic: !input topic_action_entity
+    payload: "double"
 
 actions:
   - alias: "Toogle the light"
