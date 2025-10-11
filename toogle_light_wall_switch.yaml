@@ -11,7 +11,7 @@ blueprint:
       selector:
         target:
           entity:
-            domain: switch
+          - domain: switch
     light_target_entity:
       name: Light
       description: The light to be toggled
