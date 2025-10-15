@@ -38,4 +38,4 @@ actions:
     target:
       entity_id: !input light_target_entity
     data:
-      brightness: "{{ states('input_number_entity')|int }}"
+      brightness: "{{ states(input_number_entity)|int }}"
