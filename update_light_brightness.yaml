@@ -35,6 +35,7 @@ conditions:
 actions:
   - alias: Change brightness
     action: light.turn_on
-    target: !input light_target_entity
+    target:
+      entity_id: !input light_target_entity
     data:
       brightness: "{{ states('input_number_entity')|int }}"
