@@ -1,0 +1,74 @@
+blueprint:
+  name: Hold Light Switch
+  description: Turn on light with opposite brightness
+  domain: automation
+  source_url: https://github.com/AlexandrePautet/ha-blueprints/blob/main/hold_light_switch.yaml
+  author: Alexandre Pautet
+  input:
+    topic_action_entity:
+      name: MQTT device Action
+      description: This need to be a mqtt action
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    light_target_entity:
+      name: Light
+      description: The light whose brightness will be changed
+      selector:
+        entity:
+          domain:
+          - light
+          multiple: false
+          reorder: false
+    circadien_entity:
+      name: Input Circadien
+      description: Circadien entity
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    dayornight_value:
+      name: Day night string
+      description: Day or night string
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    brightness_day_value:
+      name: Brightness Day value
+      description: Brightness day value
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    brightness_night_value:
+      name: Brightness Night value
+      description: Brightness Night value
+      selector:
+        text:
+          multiline: false
+          multiple: false
+
+trigger_variables:
+  circadien_entity: !input circadien_entity
+  dayornight_value: !input dayornight_value
+  brightness_day_value: !input brightness_day_value
+
+triggers:
+- trigger: mqtt
+  topic: !input topic_action_entity
+  payload: hold
+
+actions:
+- alias: Turn on with opposite brightness
+  action: light.turn_on
+  target:
+    entity_id: !input light_target_entity
+  data:
+    brightness: >
+      {% if is_state(circadien_entity, dayornight_value) %}
+      {{ states(brightness_night_value)|int }}
+      {% else %}
+      {{ states(brightness_day_value)|int }}
+      {% endif %}
