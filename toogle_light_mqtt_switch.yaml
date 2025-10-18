@@ -1,6 +1,6 @@
 blueprint:
   name: Toggle Light MQTT Switch
-  description: Toggle a light when differents MQTT actions (single/double/triple/quadruple)
+  description: Toggle a light when differents MQTT actions (single/double/triple/quadruple/many)
     are triggered.
   domain: automation
   source_url: https://github.com/AlexandrePautet/ha-blueprints/blob/main/toogle_light_mqtt_switch.yaml
