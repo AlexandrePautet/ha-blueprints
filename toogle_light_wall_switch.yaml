@@ -50,6 +50,19 @@ blueprint:
         text:
           multiline: false
           multiple: false
+    no_wait:
+      name: Wait time
+      description: Time to wait after last toggle
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 1
+          unit_of_measurement: seconds
+
+
+mode: single
+max_exceeded: silent
 
 trigger_variables:
   circadien_entity: !input circadien_entity
@@ -83,3 +96,5 @@ actions:
     action: switch.toggle
     target:
       entity_id: !input light_target_entity
+  - alias: "Wait the number of seconds that has been set"
+    delay: !input no_wait
