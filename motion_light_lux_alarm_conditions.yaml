@@ -1,0 +1,79 @@
+blueprint:
+  name: Motion-activated Light with lux min value and alarm conditions
+  description: Turn on a light when motion is detected when alarm is disable and under a maximal lux value. Based on motion_light.yaml from Home Assistant. Alarm conditions will be added soon or later.
+  domain: automation
+  source_url: https://github.com/AlexandrePautet/ha-blueprints/blob/main/motion_light_lux_alarm_conditions.yaml
+  author: Alexandre Pautet
+  input:
+    motion_entity:
+      name: Motion Sensor
+      selector:
+        entity:
+          filter:
+            - device_class: occupancy
+              domain: binary_sensor
+            - device_class: motion
+              domain: binary_sensor
+    light_target:
+      name: Light
+      selector:
+        target:
+          entity:
+            domain: light
+    no_motion_wait:
+      name: Wait time
+      description: Time to leave the light on after last motion is detected.
+      default: 120
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: seconds
+    lux_entity:
+      name: Luxmeter Sensor
+      selector:
+        entity:
+          filter:
+            - device_class: illuminance
+              domain: sensor
+    no_lux_below:
+      name: Lux maximal value
+      description: Maximal value of the Luxmeter
+      default: 9999
+      selector:
+        number:
+          min: 0
+          max: 9999
+          unit_of_measurement: lx
+
+# If motion is detected within the delay,
+# we restart the script.
+mode: restart
+max_exceeded: silent
+
+triggers:
+  trigger: state
+  entity_id: !input motion_entity
+  from: "off"
+  to: "on"
+
+condition:
+  - condition: numeric_state
+    entity_id: !input lux_entity
+    below: !input no_lux_below
+
+actions:
+  - alias: "Turn on the light"
+    action: light.turn_on
+    target: !input light_target
+  - alias: "Wait until there is no motion from device"
+    wait_for_trigger:
+      trigger: state
+      entity_id: !input motion_entity
+      from: "on"
+      to: "off"
+  - alias: "Wait the number of seconds that has been set"
+    delay: !input no_motion_wait
+  - alias: "Turn off the light"
+    action: light.turn_off
+    target: !input light_target
