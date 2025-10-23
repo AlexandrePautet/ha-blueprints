@@ -50,13 +50,11 @@ blueprint:
         text:
           multiline: false
           multiple: false
-
 trigger_variables:
   circadien_entity: !input circadien_entity
   dayornight_value: !input dayornight_value
   brightness_day_value: !input brightness_day_value
   brightness_night_value: !input brightness_night_value
-
 triggers:
 - trigger: mqtt
   topic: !input topic_action_entity
@@ -70,16 +68,16 @@ triggers:
 - trigger: mqtt
   topic: !input topic_action_entity
   payload: quadruple
-
+- trigger: mqtt
+  topic: !input topic_action_entity
+  payload: many
 actions:
 - alias: Toogle the light with circadian brightness
   action: light.toggle
   target:
     entity_id: !input light_target_entity
   data:
-    brightness: >
-      {% if is_state(circadien_entity, dayornight_value) %}
-      {{ states(brightness_day_value)|int }}
-      {% else %}
-      {{ states(brightness_night_value)|int }}
-      {% endif %}
+    brightness: '{% if is_state(circadien_entity, dayornight_value) %} {{ states(brightness_day_value)|int
+      }} {% else %} {{ states(brightness_night_value)|int }} {% endif %}
+
+      '
